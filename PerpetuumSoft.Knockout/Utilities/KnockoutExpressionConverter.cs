@@ -152,10 +152,13 @@ namespace PerpetuumSoft.Knockout
       if ((member == "Length" || member == "Count") && !data.InstanceNames.Contains(own))
         member = "length";
 
-		// there should not be brackets in the middle of the call chain. KO.Mapping does not generate observables in the middle
-	    own = own.TrimEnd('(', ')');
+        // there should not be brackets in the middle of the call chain. KO.Mapping does not generate observables in the middle
+        if (member != "length")
+        {
+            own = own.TrimEnd('(', ')');
+        }
 
-      string prefix = own == "" ? "" : own + ".";
+        string prefix = own == "" ? "" : own + ".";
       string suffix = member == "length" ? "" : "()";
       string result = prefix + member + suffix;
       if (data.Aliases.ContainsKey(result))
