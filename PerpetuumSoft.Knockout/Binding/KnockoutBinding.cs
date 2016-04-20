@@ -173,6 +173,12 @@ namespace PerpetuumSoft.Knockout
 			return Event("click", actionName, controllerName, routeValues);
 		}
 
+		public KnockoutBinding<TModel> Click(string value)
+		{
+			return Custom("click", value);
+
+		}
+
 		public KnockoutBinding<TModel> Submit([AspMvcAction]string actionName, [AspMvcController]string controllerName, object routeValues = null)
 		{
 			return Event("submit", actionName, controllerName, routeValues);
