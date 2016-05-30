@@ -189,6 +189,16 @@ namespace PerpetuumSoft.Knockout
       return With<TItem>(expression);
     }
 
+	/// <summary>
+	/// Создат дочерний контекст, ничего не добавляя в вёрстку.
+	/// Для случаев, когда контекст создаётся искуственно
+	/// </summary>
+	public KnockoutWithContext<TItem> FakeWith<TItem>(Expression<Func<TModel, TItem>> binding)
+	{
+		var expression = KnockoutExpressionConverter.Convert(binding, CreateData());
+		return FakeWith<TItem>(expression);
+	}
+
 	public KnockoutWithContext<TItem> With<TItem>(String expression)
 	{
 		var regionContext = new KnockoutWithContext<TItem>(viewContext, expression);
@@ -198,7 +208,19 @@ namespace PerpetuumSoft.Knockout
 		return regionContext;
 	}
 
-    public KnockoutIfContext<TModel> If(Expression<Func<TModel, bool>> binding)
+	/// <summary>
+	/// Создат дочерний контекст, ничего не добавляя в вёрстку.
+	/// Для случаев, когда контекст создаётся искуственно
+	/// </summary>
+	public KnockoutWithContext<TItem> FakeWith<TItem>(String expression)
+	{
+		var regionContext = new KnockoutWithContext<TItem>(viewContext, expression);
+		regionContext.ContextStack = ContextStack;
+		ContextStack.Add(regionContext);
+		return regionContext;
+	}
+
+		public KnockoutIfContext<TModel> If(Expression<Func<TModel, bool>> binding)
     {
 	    var expression = KnockoutExpressionConverter.Convert(binding);
 	    return If(expression);
